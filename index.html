@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>2026全员激励方案对比推演</title>
+    <style>
+        body { font-family: 'PingFang SC', sans-serif; background: #f0f2f5; padding: 20px; color: #333; line-height: 1.5; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        h1 { text-align: center; color: #1a3a5a; margin-bottom: 25px; }
+        
+        .flex-box { display: flex; gap: 20px; align-items: flex-start; }
+        .setup-panel { flex: 1; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .comparison-panel { flex: 2; display: flex; gap: 20px; }
+        
+        .plan-card { flex: 1; background: #fff; padding: 20px; border-radius: 12px; border: 2px solid transparent; transition: 0.3s; position: relative; }
+        .plan-a { border-color: #95a5a6; background: #f9f9f9; }
+        .plan-b { border-color: #2980b9; background: #f0f7ff; box-shadow: 0 10px 20px rgba(41,128,185,0.1); }
+        
+        h3 { margin-top: 0; text-align: center; padding-bottom: 10px; border-bottom: 1px solid #eee; }
+        .section-title { font-size: 0.9em; color: #7f8c8d; margin: 15px 0 5px; font-weight: bold; text-transform: uppercase; }
+        
+        .input-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+        input { width: 80px; padding: 6px; text-align: center; border: 1px solid #ccc; border-radius: 4px; font-size: 1em; }
+        
+        .result-box { margin-top: 20px; padding: 15px; border-radius: 8px; background: white; border: 1px solid #e0e0e0; }
+        .highlight-blue { color: #2980b9; font-weight: bold; }
+        .highlight-green { color: #27ae60; font-weight: bold; }
+
+        .btn-compare { width: 100%; padding: 16px; background: #2c3e50; color: white; border: none; border-radius: 6px; font-size: 1.1em; cursor: pointer; margin-top: 20px; font-weight: bold; }
+        .btn-compare:hover { background: #1a252f; }
+
+        .share-row { display: flex; justify-content: space-between; font-size: 0.95em; margin: 8px 0; border-bottom: 1px dashed #eee; padding-bottom: 4px; }
+        .badge { background: #2980b9; color: white; padding: 2px 8px; border-radius: 10px; font-size: 0.7em; margin-left: 5px; vertical-align: middle; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>2026合伙经营：全员提成制收益推演</h1>
+    
+    <div class="flex-box">
+        <div class="setup-panel">
+            <h3>年度运营硬成本</h3>
+            <div class="input-row"><label>4人基本薪资(28.8万)</label><span>已预设</span></div>
+            <div class="input-row"><label>投流/推广费(万)</label><input type="number" id="ads" value="15"></div>
+            <div class="input-row"><label>租金/水电费(万)</label><input type="number" id="rent" value="10"></div>
+            <div class="input-row"><label>团建/出差费(万)</label><input type="number" id="team" value="8"></div>
+            <hr>
+            <div class="input-row"><label><b>全员统一提成率</b></label><b style="color:#e74c3c">10%</b></div>
+            <p style="font-size:0.85em; color:#666; background:#fff9db; padding:10px; border-radius:5px;">核心规则：所有股东底薪相同，每签一单直接提取利润的 10% 作为个人奖励，剩余利润再按股分红。</p>
+            <button class="btn-compare" onclick="compare()">计算推演对比结果</button>
+        </div>
+
+        <div class="comparison-panel">
+            <div class="plan-card plan-a">
+                <h3>方案 A：维持现状</h3>
+                <p style="font-size:0.8em; color:#7f8c8d; text-align:center;">(25年水平 / 3人均分业务)</p>
+                <div class="section-title">经营指标</div>
+                <div class="input-row"><label>总毛利(万)</label><span>130</span></div>
+                <div class="input-row"><label>你的持股比例</label><span>0%</span></div>
+                
+                <div class="result-box">
+                    <div class="section-title">年度收益明细</div>
+                    <div class="share-row"><span>分红净利润:</span><b id="a_net">0</b></div>
+                    <div class="share-row" style="color:#7f8c8d"><span>你(尚未入伙):</span><b>0.00 万</b></div>
+                    <div class="share-row"><span>股东 B/C/D(均):</span><b id="a_other">0</b></div>
+                </div>
+            </div>
+
+            <div class="plan-card plan-b">
+                <h3>方案 B：全员激励模式 <span class="badge">推荐</span></h3>
+                <p style="font-size:0.8em; color:#2980b9; text-align:center;">(你带资入场 / 全员10%提成)</p>
+                <div class="section-title">业绩预估</div>
+                <div class="input-row"><label>预期总毛利(万)</label><input type="number" id="b_gross" value="300"></div>
+                <div class="input-row"><label>你负责的毛利(万)</label><input type="number" id="b_my_prod" value="200"></div>
+                <div class="input-row"><label>你的持股(%)</label><input type="number" id="b_share" value="15"></div>
+                
+                <div class="result-box">
+                    <div class="section-title highlight-blue">推演收益报告</div>
+                    <div class="share-row"><span>分红净利润:</span><b id="b_net">0</b></div>
+                    <div class="share-row"><span class="highlight-green">你(底薪+提成+分红):</span><b id="b_my_total" class="highlight-green">0</b></div>
+                    <div class="share-row"><span style="color:#e67e22">合伙人 B/C/D(均):</span><b id="b_other" style="color:#e67e22">0</b></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function compare() {
+        // 基本成本
+        let ads = parseFloat(document.getElementById('ads').value) || 0;
+        let rent = parseFloat(document.getElementById('rent').value) || 0;
+        let team = parseFloat(document.getElementById('team').value) || 0;
+        let fixed_cost = 28.8 + ads + rent + team;
+
+        // 方案 A：130万毛利，3人分。无提成。
+        let a_net = 130 - fixed_cost; if(a_net < 0) a_net = 0;
+        let a_other_total = 7.2 + (a_net / 3);
+        document.getElementById('a_net').innerText = a_net.toFixed(2) + " 万";
+        document.getElementById('a_other').innerText = a_other_total.toFixed(2) + " 万";
+
+        // 方案 B：全员10%提成
+        let b_gross = parseFloat(document.getElementById('b_gross').value) || 0;
+        let b_my_prod = parseFloat(document.getElementById('b_my_prod').value) || 0;
+        let b_share = parseFloat(document.getElementById('b_share').value) / 100;
+        
+        // 提成总支出 = 总毛利 * 10%
+        let total_comm = b_gross * 0.1;
+        
+        // 净利润 = 总毛利 - 固定成本 - 提成支出
+        let b_net = b_gross - fixed_cost - total_comm; if(b_net < 0) b_net = 0;
+        
+        // 你的收益：7.2底薪 + (你负责的毛利*10%) + 分红
+        let my_comm = b_my_prod * 0.1;
+        let my_div = b_net * b_share;
+        let b_my_total = 7.2 + my_comm + my_div;
+
+        // 其他人平均收益：7.2底薪 + (剩余毛利平均分*10%) + 分红
+        let others_prod = (b_gross - b_my_prod) / 3;
+        let other_div = (b_net * (1 - b_share)) / 3;
+        let b_other_total = 7.2 + (others_prod * 0.1) + other_div;
+
+        document.getElementById('b_net').innerText = b_net.toFixed(2) + " 万";
+        document.getElementById('b_my_total').innerText = b_my_total.toFixed(2) + " 万";
+        document.getElementById('b_other').innerText = b_other_total.toFixed(2) + " 万";
+    }
+</script>
+</body>
+</html>
